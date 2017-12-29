@@ -1,0 +1,266 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rock Paper Scissors</title>
+<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+<style>
+    body {
+        background-image: url('Images/Bg.jpg');
+        margin-top: 0px;
+        background-size: cover;
+        color: white;
+        font-family: 'Roboto Slab', serif;
+        
+    }
+    h2 {
+        margin-top: 10px;
+        text-align: center;
+        font-family: 'Baloo', cursive;
+    }
+    #computer_choice, #player_choice {
+        display: block;
+        margin: auto;
+        width: 80px;
+        height: 80px;
+        border: 2px dashed;
+    }
+    .choices {
+       display: flex; 
+       margin-top:2%; 
+    }
+    #result {
+        margin-top: 2%;
+        text-align: center;
+        margin-bottom: -2%;
+        color: 	Yellow;
+    }
+    #choice {
+        display: block;
+        margin: auto;
+        width: 90%;
+    }
+    .button {
+        width: 31%;
+        border: 3px solid coral;
+        border-radius: 5px;
+        background-color: coral;
+        margin: auto;
+        text-align: center;
+        
+    }
+    #score_display, #comp_score_display {
+        margin-top: 2%;
+        text-align: center;
+        font-family: 'Roboto Slab', serif;
+    }
+    .button img {
+        width:32px;
+        height: auto;
+    }
+    #player_choice img, #computer_choice img{
+        display: block;
+        margin: auto;
+        height: auto;
+        width: 68px;
+        font-family: 'Roboto Slab', serif;
+    }
+    .header {
+        text-align: center;
+        background-color:slategray;
+        height: 60px;
+        width:100%;
+        opacity:0.8;
+    }
+    .header img {
+        padding-left: 10px;
+        padding-top: 5px;
+        float: left;
+        width:50px;
+    }
+   
+    .header h1 {
+        display: inline-block;
+        font-family: 'Baloo', cursive;
+        margin-top: 3px;  
+        
+    }
+     @media screen and (max-width: 600px) {
+              .header h1 {
+                     font-size:1.7em;
+                     margin-top:12px;
+              }
+              #player {
+                     margin-top:0px;
+              }
+               #result {
+                     margin-top: 15px;
+                     margin-bottom: -30px;
+    }
+    
+</style>    
+
+</head>
+<body>
+<div class="header">
+<a href="default.html"><img src="Images/Nikunj_Logo.png"></a>
+
+<h1>Rock Paper Scissors</h1>
+</div>
+
+<h2> Computer</h2>
+
+<div id="computer_choice"></div>
+<div id="comp_score_display">Computer Score: 0</div>
+<div id="result"> Please choose paper, rock, or scissors!</div>
+ 
+<br /><br />
+ 
+<h2 id="player">Player</h2>
+
+<div id="player_choice"></div>
+<div id="score_display">Player Score: 0</div>
+<div id= "choice">
+<div class="choices">
+<div id="paper" class="button">
+    <img src="Images/paper.png"> <br>paper</div>
+<div id="rock" class="button">
+    <img src="Images/rock.png"> <br>rock</div>
+<div id="scissors" class="button">
+    <img src="Images/scissors.png"> <br>scissors</div>
+    
+</div>    
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+    
+function game(){
+        this.computerInput = function(){
+                this.computerChoice = Math.random();
+                     console.log(this.computerChoice);
+                if (this.computerChoice < 0.34) {
+                        return this.computerChoice = "rock";
+                } else if(this.computerChoice <= 0.67) {
+                        return this.computerChoice = "paper";
+                } else {
+                        return this.computerChoice = "scissors";
+                };
+        };
+ 
+        // choice1 is player's choice
+        // choice2 is computer's choice
+        this.compare = function(choice1, choice2){
+            console.log(choice1);
+            console.log(choice2);
+            if (choice1 === choice2) {
+                return "Draw!";
+            }
+            else if(choice1 === "rock") {
+                if(choice2 === "scissors") {
+                    scoreCount('add');
+                    return "Player wins";
+                }
+                else {
+                    compScoreCount('add');
+                    return "Computer wins";
+                }
+            }
+              else if(choice1 === "paper") {
+                if(choice2 === "scissors") {
+                    compScoreCount('add');
+                    return "Computer wins";
+                }
+                else {
+                    scoreCount('add');
+                    return "Player wins";
+                }
+            }
+              else if(choice1 === "scissors") {
+                if(choice2 === "rock") {
+                    compScoreCount('add');
+                    return "Computer wins";
+                }
+                else {
+                    scoreCount('add');
+                    return "Player wins";
+                }
+            }
+ 
+        };
+};  
+ 
+    function symbolChoice(choice) {
+        if(choice == "paper"){
+            return "<img src='Images/paper.png' />";
+        }
+        else if(choice == "rock"){
+            return "<img src='Images/rock.png' />";
+        }
+        else if(choice == "scissors"){
+            return "<img src='Images/scissors.png' />";
+        }
+    }
+    
+     function scoreCount(newScore){
+        if(newScore == "add") {
+            score = score+1;
+        }
+        scoreDisplay.innerHTML= "Your score: " +score;
+        scoreDisplay.style.color= '#00FF00';
+    }
+    
+     function compScoreCount(newScore){
+        if(newScore == "add") {
+            compScore = compScore+1;
+        }
+        compScoreDisplay.innerHTML= "Computer score: " +compScore;
+        compScoreDisplay.style.color= '#FF0000';
+    }
+
+
+    
+var game = new game();
+var userChoice = "";
+var computerChoice = "";
+var result = "";
+var score=0;
+var compScore=0;
+var buttons = document.getElementsByClassName("button"); // consists of 3 buttons: rock, paper & scissors
+var playerChoiceDisplay = document.getElementById("player_choice"); // an element to display player's choice
+var computerChoiceDisplay = document.getElementById("computer_choice"); // an element to display computer's choice
+var resultDisplay = document.getElementById("result"); // an element to display the game result
+var scoreDisplay = document.getElementById('score_display');
+var compScoreDisplay = document.getElementById('comp_score_display');
+    for (var i=0; i<buttons.length; i++ ) {
+        buttons[i].addEventListener('click', function(){
+            var userChoice= this.id;
+            
+            var choiceGraphic= symbolChoice(userChoice);
+            playerChoiceDisplay.innerHTML= choiceGraphic;
+            computerChoice = game.computerInput();
+            var choiceGraphic= symbolChoice(computerChoice);
+            console.log(choiceGraphic);
+            computerChoiceDisplay.innerHTML= choiceGraphic;
+            result = game.compare(userChoice, computerChoice);
+             if( result === "Computer wins") {
+                resultDisplay.innerHTML = result;
+                resultDisplay.style.color='#FF0000';	
+            }
+            else if (result === "Player wins") {
+               resultDisplay.innerHTML = result;
+                resultDisplay.style.color='#00FF00';
+            }
+           else {
+                resultDisplay.innerHTML = result;
+                resultDisplay.style.color= 'blue';
+            }      
+      },false);
+    }
+
+
+});
+</script>
+</body>
+</html>
